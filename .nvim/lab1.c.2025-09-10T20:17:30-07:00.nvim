@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char *userInput = NULL;
+size_t len = 0;
+
+int main()
+{
+  printf("Please enter some text: ");
+  
+  if (getline(&userInput, &len, stdin) == -1)
+  {
+    printf("ERROR: Could not read line.\n");
+    return 1;
+  }
+}

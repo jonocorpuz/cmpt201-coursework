@@ -1,0 +1,15 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* line = NULL;
+size_t len = 0;
+ssize_t nread;
+
+int main() {
+  printf("Please enter some text: ");
+  nread = getLine(&line, &len, stdin);
+
+  char* token = strtok(line, " ");
+}
