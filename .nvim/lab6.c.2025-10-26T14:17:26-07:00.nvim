@@ -1,0 +1,82 @@
+13│
+13│
+14│ #define TEST(expr)                                                             \
+20│       printf("Test passed: %s\n", #expr);                                      \
+23│
+24│ typedef struct node {
+30│
+ example_1.c
+  1 #include <stdbool.h>
+  2 #include <stdint.h>
+  3 #include <stdio.h>
+  4 #include <stdlib.h>
+  5
+  6 #define ASSERT(expr)                                                           \
+  7 ┆ {                                                                            \
+  8 ┆ ┆ if (!(expr)) {                                                             \
+  9 ┆ ┆ ┆ fprintf(stderr, "Assertion failed: %s\n", #expr);                        \
+ 10 ┆ ┆ ┆ exit(1);                                                                 \
+ 11 ┆ ┆ }                                                                          \
+ 12 ┆ }
+ 13
+ 14 #define TEST(expr)                                                             \
+ 15 ┆ {                                                                            \
+ 16 ┆ ┆ if (!(expr)) {                                                             \
+ 17 ┆ ┆ ┆ fprintf(stderr, "Test failed: %s\n", #expr);                             \
+ 18 ┆ ┆ ┆ exit(1);                                                                 \
+ 19 ┆ ┆ } else {                                                                   \
+ 20 ┆ ┆ ┆ printf("Test passed: %s\n", #expr);                                      \
+ 21 ┆ ┆ }                                                                          \
+ 22 ┆ }
+ 23
+ 24 typedef struct node {
+ 25 ┆ uint64_t data;
+ 26 ┆ struct node *next;
+ 27 } node_t;
+ 28
+ 29 node_t *head = NULL;
+ 30
+ 31 void insert_sorted(uint64_t data) {
+ 32 ┆ node_t *new_node = malloc(sizeof(node_t));
+ 33 ┆ new_node->data = data;
+ 34 ┆ new_node->next = NULL;
+ 35 ┆
+ 36 ┆ if (head == NULL) {
+ 37 ┆ ┆ head = new_node;
+ 38 ┆ }
+ 39 ┆
+ 40 ┆ else if (data < head->data) {
+ 41 ┆ ┆ new_node->next = head;
+ 42 ┆ ┆ head = new_node;
+ 43 ┆ }
+ 44 ┆ ┆
+ 45 ┆ else {
+ 46 ┆ ┆ node_t *curr = head;
+ 47 ┆ ┆ node_t *prev = NULL;
+ 48 ┆ ┆
+ 49 ┆ ┆ while (curr != NULL && data >= curr->data) {
+ 50 ┆ ┆ ┆ prev = curr;
+ 51 ┆ ┆ ┆ curr = curr->next;
+ 52 ┆ ┆ }
+ 53 ┆ ┆
+ 54 ┆ ┆ prev->next = new_node;
+ 55 ┆ ┆ new_node->next = curr;
+ 56 ┆ }
+ 57 }
+ 58
+ 59 int index_of(uint64_t data) {
+ 60 ┆ node_t *curr = head;
+ 61 ┆ int index = 0;
+ 62 ┆
+ 63 ┆ while (curr != NULL) {
+ 64 ┆ ┆ if (curr->data == data) {
+ 65 ┆ ┆ ┆ return index;
+ 66 ┆ ┆ }
+ 67 ┆ ┆
+ 68 ┆ ┆ curr = curr->next;
+ 69 ┆ ┆ index++;
+ 70 ┆ }
+ 71 ┆
+ 72 ┆ return -1;
+ 73 }
+ NORMAL  example_1.c                                                                                                        OK  unix | utf-8 | c    1%    1:1
